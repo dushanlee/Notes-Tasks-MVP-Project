@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS tasks;
 CREATE TABLE notes (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    content TEXT,
+    content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
@@ -12,7 +12,7 @@ CREATE TABLE notes (
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
     due_date DATE,
     status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'complete', 'late')),
     created_at TIMESTAMP DEFAULT NOW(),
