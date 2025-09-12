@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router"
 import type { TaskFormProps } from "../vite-env"
 
 export default function TaskForm({
@@ -22,14 +23,14 @@ export default function TaskForm({
         <form onSubmit={handleSubmit} className="space-y-4">
             <input
                 type="text"
-                placeholder="Task title"
+                placeholder="Enter Task title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full border p-2 rounded"
                 required
             />
             <textarea
-                placeholder="Task description"
+                placeholder="Enter your task description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full border p-2 rounded"
@@ -51,12 +52,20 @@ export default function TaskForm({
                 onChange={(e) => setDueDate(e.target.value)}
                 className="w-full border p-2 rounded"
             />
-            <button
-                type="submit"
-                className="block p-2 rounded bg-black text-white shadow hover:bg-gray-900 transition"
-            >
-                Save Task
-            </button>
+            <div className="flex gap-2">
+                <button
+                    type="submit"
+                    className="p-2 rounded bg-white text-black font-semibold shadow hover:bg-gray-100 transition border-2 border-black/10"
+                >
+                    Save Task
+                </button>
+                <Link
+                    to="/tasks"
+                    className="p-2 rounded bg-white text-black font-semibold shadow hover:bg-gray-100 transition border-2 border-black/10 flex items-center justify-center"
+                >
+                    Cancel
+                </Link>
+            </div>
         </form>
     )
 }
