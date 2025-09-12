@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import type { TaskCardProps } from "../vite-env"
 
 export default function TaskCard({ task }: TaskCardProps) {
     const statusColors: Record<string, string> = {
@@ -9,30 +10,30 @@ export default function TaskCard({ task }: TaskCardProps) {
 
     return (
         <Link
-            to={`/tasks/${task.id}`} // navigate to TaskDetail for this task
-            className="block border rounded-lg p-4 shadow-sm bg-white hover:shadow-md"
+            to={`/tasks/${task.id}`}
+            className="block border-2 border-black/10 rounded-xl p-4 shadow bg-white/80 hover:bg-gray-100 transition text-left"
         >
-            <h2 className="text-lg font-bold text-black">{task.title}</h2>
-            <p className="text-sm text-gray-600">{task.description}</p>
+            <h2 className="font-bold text-lg text-black mb-1">{task.title}</h2>
+            <p className="text-sm text-gray-500 mb-2">{task.description}</p>
 
-            <div className="mt-2 flex items-center justify-between">
+            <div className="flex items-center gap-1">
+                {task.due_date && (
+                    <span className="text-xs text-gray-500">
+                        Due: {new Date(task.due_date + 'Z').toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}
+                    </span>
+                )}
                 <span
-                    className={`px-2 py-1 text-xs font-medium rounded ${
+                    className={`px-1.5 py-0.5 text-xs font-medium rounded leading-tight ${
                         statusColors[task.status] || "bg-gray-200 text-gray-800"
                     }`}
                 >
                     {task.status}
                 </span>
-                {task.due_date && (
-                    <span className="text-sm text-gray-500">
-                        Due: {new Date(task.due_date).toLocaleDateString()}
-                    </span>
-                )}
             </div>
 
-            <div className="mt-2 text-xs text-gray-400">
-                Created: {new Date(task.created_at).toLocaleDateString()}
-            </div>
+            <p className="text-xs text-gray-500">
+                Created: {new Date(task.created_at).toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}
+            </p>
         </Link>
     )
 }

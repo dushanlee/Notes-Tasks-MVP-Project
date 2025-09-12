@@ -1,3 +1,5 @@
+import type { Task } from "../vite-env"
+
 const BASE_URL = "http://localhost:8000/api"
 
 export async function getAllTasks(): Promise<Task[] | null> {
@@ -57,7 +59,7 @@ export async function deleteTask(id: number): Promise<boolean> {
     }
 }
 
-export async function updateTask(id: number, task: { title: string; description: string; due_date?: string | null }) {
+export async function updateTask(id: number, task: { title: string; description: string; status: string; due_date?: string | null }) {
     try {
         const response = await fetch(`${BASE_URL}/tasks/${id}`, {
             method: "PUT",

@@ -31,9 +31,10 @@ type RecentData = {
 }
 
 // Used in StatsCard.tsx
+import { ReactNode } from 'react';
 type StatCardProps = {
-    label: string
-    value: number
+    label: string | React.ReactNode;
+    value: number;
 }
 
 // Used in NotesPage.tsx, noteApi.ts, and NoteCard.tsx

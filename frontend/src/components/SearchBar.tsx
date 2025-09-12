@@ -1,4 +1,5 @@
 import { useState } from "react"
+import type { SearchBarProps } from "../vite-env"
 
 export default function SearchBar({ placeholder = "Search...", onSearch }: SearchBarProps) {
     const [query, setQuery] = useState("")
@@ -15,13 +16,13 @@ export default function SearchBar({ placeholder = "Search...", onSearch }: Searc
     }
 
     return (
-        <form onSubmit={handleSubmit} className="mb-4">
+        <form onSubmit={handleSubmit} className="mb-4 w-full">
             <input
                 type="text"
                 value={query}
                 onChange={handleChange}
                 placeholder={placeholder}
-                className="w-full border rounded p-2 focus:outline-none focus:ring focus:ring-gray-300"
+                className="w-full border-2 border-black/10 rounded-xl p-3 bg-white/80 shadow focus:outline-none focus:ring-2 focus:ring-black/10 transition"
             />
         </form>
     )

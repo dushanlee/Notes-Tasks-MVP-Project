@@ -1,93 +1,181 @@
-# notes-task-mvp-unit-project
+## Notes & Tasks MVP Project
 
+The purpose of this project is to demonstrate a full-stack application
+built with FastAPI (backend) and React (frontend). It provides basic
+note-taking and task-tracking functionality, including search and a
+homepage dashboard summary. This project was created as practice for building a
+Minimum Viable Product (MVP) with database integration, RESTful API
+endpoints, and a React user interface.
 
+## Features
 
-## Getting started
+Notes:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- Create, view, update, and delete notes
+- Search notes by title or content
+- Track creation and last update timestamps
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Tasks:
 
-## Add your files
+- Create, view, update, and delete tasks
+- Assign due dates and automatically mark overdue tasks as late
+- Track task status (pending, complete, late)
+- Search tasks by title or description
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Dashboard:
 
+- View total notes and tasks
+- See counts of pending, completed, and late tasks
+- Recent activity (last 5 notes and tasks)
+
+## Tech Stack
+
+Backend:
+
+- FastAPI (Python)
+- SQLAlchemy ORM
+- PostgreSQL (via Docker)
+- Pydantic for schema validation
+
+Frontend:
+
+- React with Vite (Typescript)
+- React Router (Typescript)
+- TailwindCSS
+
+## Project Architecture
+
+```scss
+Frontend (React + Vite)  →  Backend (FastAPI)  →  Database (PostgreSQL via Docker)
 ```
-cd existing_repo
-git remote add origin https://gitlab.galvanize.com/dushan830/notes-task-mvp-unit-project.git
-git branch -M main
-git push -uf origin main
+
+## Setup Instructions
+
+1. Clone the repository
+
+```bash
+# Clone the repo from GitLab (replace with your repo URL)
+git clone <your-repo-url>
+# Move into the project directory
+cd notes-task-mvp-unit-project
 ```
 
-## Integrate with your tools
+2. Backend Setup (FastAPI + PostgreSQL)
 
-- [ ] [Set up project integrations](https://gitlab.galvanize.com/dushan830/notes-task-mvp-unit-project/-/settings/integrations)
+Navigate to the backend folder:
 
-## Collaborate with your team
+```bash
+# Move into the backend folder
+cd backend
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Start PostgreSQL with Docker:
 
-## Test and Deploy
+```bash
+# This will start the PostgreSQL container in the background (-d = detached mode)
+docker compose up -d
+```
 
-Use the built-in continuous integration in GitLab.
+Create the database and load the schema:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+```bash
+# Open an interactive psql shell inside the container
+docker exec -it postgres_db psql -U postgres
+# Inside the psql shell, run if it doesn't exist:
+CREATE DATABASE notes_and_tasks;
+# Connect to the new or existing database
+\c notes_and_tasks
+# Load the schema.sql file (this assumes your file is in ./data/schema.sql)
+\i /data/schema.sql
+# Exit the psql shell
+\q
+```
 
-***
+Create a virtual environment and install dependencies:
 
-# Editing this README
+```bash
+# Create a virtual environment
+python -m venv venv
+# Activate the virtual environment
+source venv/bin/activate   # On Mac/Linux
+venv\Scripts\activate      # On Windows (PowerShell)
+# Upgrade pip and install dependencies
+python -m pip install --upgrade pip
+python -m pip install "fastapi[standard]" psycopg sqlalchemy
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Run the backend:
 
-## Suggestions for a good README
+```bash
+fastapi dev main.py
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+The backend will run at: http://localhost:8000
 
-## Name
-Choose a self-explaining name for your project.
+3. Frontend Setup (React + Vite)
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Open a new terminal and navigate to the frontend folder:
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+```bash
+# Open a new terminal window
+cd frontend
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Install dependencies:
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+```bash
+# Install all npm packages defined in package.json
+npm install
+```
+
+Run the frontend:
+
+```bash
+# Start the React development server
+npm run dev
+```
+
+The frontend will run on http://localhost:5173
+
+4. API Endpoints
+
+Notes:
+
+POST /api/notes → Create a note
+GET /api/notes → List all notes
+GET /api/notes/{id} → Get a specific note
+PUT /api/notes/{id} → Update a note
+DELETE /api/notes/{id} → Delete a note
+GET /api/notes/query?query=searchTerm → Search notes
+
+Tasks:
+
+POST /api/tasks → Create a task
+GET /api/tasks → List all tasks
+GET /api/tasks/{id} → Get a specific task
+PUT /api/tasks/{id} → Update a task
+DELETE /api/tasks/{id} → Delete a task
+GET /api/tasks/query?query=searchTerm → Search tasks
+
+Dashboard:
+
+GET /api/dashboard/stats → Summary of notes & tasks
+GET /api/dashboard/recent → Recent notes & tasks
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+1. Open the frontend in your browser (http://localhost:5173)
+2. Create notes and tasks using the provided forms
+3. Use search to quickly filter notes or tasks
+4. View stats and recent activity on the dashboard
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- Add user authentication (multi-user support with JWT)
+- Add folders or tags to organize notes/tasks
+- Improve dashboard UI with charts/visuals
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Authors and Acknowledgment
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Developed by Dushan (Michael) Lee as part of the Hack Reactor software engineering bootcamp.
+Thanks to Bart Dorsey (Hack Reactor Instructor) for guidance and feedback.

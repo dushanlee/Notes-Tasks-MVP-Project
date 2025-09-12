@@ -1,4 +1,5 @@
 import { useState } from "react"
+import type { TaskFormProps } from "../vite-env"
 
 export default function TaskForm({
     initialTitle = "",
@@ -45,14 +46,14 @@ export default function TaskForm({
                 <option value="late">Late</option>
             </select>
             <input
-                type="date"
+                type="datetime-local"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 className="w-full border p-2 rounded"
             />
             <button
                 type="submit"
-                className="px-4 py-2 bg-black text-black rounded hover:bg-gray-100"
+                className="block p-2 rounded bg-black text-white shadow hover:bg-gray-900 transition"
             >
                 Save Task
             </button>

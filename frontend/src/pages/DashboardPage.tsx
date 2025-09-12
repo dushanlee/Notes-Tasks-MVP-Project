@@ -4,6 +4,7 @@ import RecentNotes from "../components/RecentNotes"
 import RecentTasks from "../components/RecentTasks"
 import { getDashboardData } from "../connections/dashboardApi"
 import Error from "../components/Error"
+import type { RecentData, Stats } from "../vite-env"
 
 export default function DashboardPage() {
     const [loading, setLoading] = useState(true)
@@ -43,18 +44,36 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="space-y-6">
-            <h1 className="text-2xl font-bold text-black">Dashboard</h1>
+        <div className="flex justify-center w-full h-full flex-1">
+            <div className="w-full max-w-7xl space-y-6 px-4 md:px-8 border-2 border-black/10 rounded-xl shadow bg-white/70 flex-1 flex flex-col">
+                <div className="flex flex-col items-center w-full mt-2 mb-8">
+                    <h1 className="text-2xl font-bold text-black text-center w-full">Dashboard</h1>
+                </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <StatsCard label="Total Notes" value={stats.total_notes} />
-                <StatsCard label="Total Tasks" value={stats.total_tasks} />
-                <StatsCard label="Completed" value={stats.completed_tasks} />
-                <StatsCard label="Late" value={stats.late_tasks} />
+                {/* Action buttons row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <button className="w-full bg-white text-black rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 transition border-2 border-black/10">+ New Note</button>
+                    <button className="w-full bg-white text-black rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 transition border-2 border-black/10">+ New Task</button>
+                </div>
+
+                {/* Stats row */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <StatsCard label={<><span role="img" aria-label="note">📝</span> Total Notes</>} value={stats.total_notes} />
+                    <StatsCard label={<><span role="img" aria-label="check">✅</span> Completed Tasks</>} value={stats.completed_tasks} />
+                    <StatsCard label={<><span role="img" aria-label="working">💼</span> Pending Tasks</>} value={stats.total_tasks} />
+                    <StatsCard label={<><span role="img" aria-label="late">📅</span> Late Tasks</>} value={stats.late_tasks} />
+                </div>
+
+                {/* Recent notes and tasks side by side */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <RecentNotes notes={recent.notes} />
+                    </div>
+                    <div>
+                        <RecentTasks tasks={recent.tasks} />
+                    </div>
+                </div>
             </div>
-
-            <RecentNotes notes={recent.notes} />
-            <RecentTasks tasks={recent.tasks} />
         </div>
     )
 }

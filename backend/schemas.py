@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import datetime, date
+from datetime import datetime
 from typing import Optional
 
 
@@ -19,14 +19,15 @@ class NoteOut(BaseModel):
 class TaskCreate(BaseModel):
     title: str
     description: str
-    due_date: Optional[date] = None
+    due_date: Optional[datetime] = None
+    status: str = "pending"
 
 
 class TaskOut(BaseModel):
     id: int
     title: str
     description: str
-    due_date: Optional[date] = None
+    due_date: Optional[datetime] = None
     status: str
     created_at: datetime
     updated_at: datetime

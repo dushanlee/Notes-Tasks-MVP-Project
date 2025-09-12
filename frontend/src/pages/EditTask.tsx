@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router"
 import { getTaskById, updateTask } from "../connections/taskApi"
 import TaskForm from "../components/TaskForm"
+import type { Task } from "../vite-env"
 
 export default function EditTask() {
     const { id } = useParams<{ id: string }>()
@@ -18,9 +19,9 @@ export default function EditTask() {
         }
     }, [id])
 
-    async function handleSubmit(title: string, description: string, due_date: string | null) {
+    async function handleSubmit(title: string, description: string, status: string, due_date: string | null) {
         if (!id) return
-        const updated = await updateTask(Number(id), { title, description, due_date })
+        const updated = await updateTask(Number(id), { title, description, status, due_date })
         if (updated) navigate(`/tasks/${id}`)
         else setError("Failed to update task")
     }
@@ -34,6 +35,7 @@ export default function EditTask() {
             <TaskForm
                 initialTitle={task.title}
                 initialDescription={task.description}
+                initialStatus={task.status}
                 initialDueDate={task.due_date ?? ""}
                 onSubmit={handleSubmit}
             />

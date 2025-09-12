@@ -1,4 +1,5 @@
 import { useState } from "react"
+import type { NoteFormProps } from "../vite-env"
 
 export default function NoteForm({
     initialTitle = "",
@@ -33,7 +34,7 @@ export default function NoteForm({
             />
             <button
                 type="submit"
-                className="px-4 py-2 bg-black text-black rounded hover:bg-gray-100"
+                className="block p-2 rounded bg-black text-white shadow hover:bg-gray-900 transition"
             >
                 Save Note
             </button>

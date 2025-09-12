@@ -6,7 +6,7 @@ export default function Layout() {
         <>
             <div className="flex h-screen">
                 <Sidebar />
-                <main className="flex-1 p-6 overflow-y-auto bg-white">
+                <main className="flex-1 px-4 md:px-8 py-6 overflow-hidden bg-white">
                     <Outlet />
                 </main>
             </div>

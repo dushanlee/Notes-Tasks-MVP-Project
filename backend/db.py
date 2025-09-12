@@ -2,9 +2,11 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 from db_models import DBNote, DBTask
 from schemas import NoteCreate, NoteOut, TaskCreate, TaskOut
-from datetime import date
+from datetime import datetime
 
-DATABASE_URL = "postgresql+psycopg://postgres:postgres@localhost:5432/notes_and_tasks"
+DATABASE_URL = (
+    "postgresql+psycopg://postgres:postgres@localhost:5432/notes_and_tasks"
+)
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(engine)
@@ -97,7 +99,8 @@ def delete_note(note_id: int) -> bool:
 def search_notes(query: str) -> list[NoteOut]:
     with SessionLocal() as db:
         stmt = select(DBNote).where(
-            (DBNote.title.ilike(f"%{query}%")) | (DBNote.content.ilike(f"%{query}%"))
+            (DBNote.title.ilike(f"%{query}%"))
+            | (DBNote.content.ilike(f"%{query}%"))
         )
         db_notes = db.scalars(stmt).all()
         notes: list[NoteOut] = []
@@ -119,7 +122,7 @@ def add_task(task: TaskCreate) -> TaskOut:
     task_model = None
     with SessionLocal() as db:
         task_model = DBTask(**task.model_dump())
-        if task_model.due_date and task_model.due_date < date.today():
+        if task_model.due_date and task_model.due_date < datetime.now():
             task_model.status = "late"
         db.add(task_model)
         db.commit()
@@ -185,7 +188,7 @@ def update_task(task_id: int, task: TaskCreate) -> TaskOut | None:
             task_object.description = task.description
         if task.due_date is not None:
             task_object.due_date = task.due_date
-        if task_object.due_date and task_object.due_date < date.today():
+        if task_object.due_date and task_object.due_date < datetime.now():
             task_object.status = "late"
         db.commit()
         db.refresh(task_object)
@@ -240,8 +243,12 @@ def get_dashboard_stats() -> dict:
     with SessionLocal() as db:
         total_notes = db.query(DBNote).count()
         total_tasks = db.query(DBTask).count()
-        completed_tasks = db.query(DBTask).filter(DBTask.status == "complete").count()
-        pending_tasks = db.query(DBTask).filter(DBTask.status == "pending").count()
+        completed_tasks = (
+            db.query(DBTask).filter(DBTask.status == "complete").count()
+        )
+        pending_tasks = (
+            db.query(DBTask).filter(DBTask.status == "pending").count()
+        )
         late_tasks = db.query(DBTask).filter(DBTask.status == "late").count()
 
         return {
@@ -256,10 +263,16 @@ def get_dashboard_stats() -> dict:
 def get_recent_activity(limit: int = 5) -> dict:
     with SessionLocal() as db:
         recent_notes = (
-            db.query(DBNote).order_by(DBNote.updated_at.desc()).limit(limit).all()
+            db.query(DBNote)
+            .order_by(DBNote.updated_at.desc())
+            .limit(limit)
+            .all()
         )
         recent_tasks = (
-            db.query(DBTask).order_by(DBTask.updated_at.desc()).limit(limit).all()
+            db.query(DBTask)
+            .order_by(DBTask.updated_at.desc())
+            .limit(limit)
+            .all()
         )
 
         notes: list[NoteOut] = []

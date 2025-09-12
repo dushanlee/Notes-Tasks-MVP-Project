@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router"
 import { getNoteById, updateNote } from "../connections/noteApi"
 import NoteForm from "../components/NoteForm"
+import type { Note } from "../vite-env"
 
 export default function EditNote() {
     const { id } = useParams<{ id: string }>()
