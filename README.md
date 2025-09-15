@@ -22,12 +22,14 @@ Welcome to the Notes & Tasks MVP! This is a full-stack productivity app for mana
 ### Notes
 
 - Create, view, update, and delete notes
+- **Bulk select and delete multiple notes at once**
 - Search notes by title or content
 - Track creation and last update timestamps
 
 ### Tasks
 
 - Create, view, update, and delete tasks
+- **Bulk select and delete multiple notes or tasks at once**
 - Assign due dates and automatically mark overdue tasks as late
 - Track task status (pending, complete, late)
 - Search tasks by title or description
@@ -224,8 +226,12 @@ The frontend will run on http://localhost:5173
 1. Open the frontend in your browser: [http://localhost:5173](http://localhost:5173)
 2. Use the sidebar to navigate between Dashboard, Notes, and Tasks.
 3. Create notes and tasks using the forms. Edit or delete from the detail pages.
-4. Use the search bar to filter notes or tasks by title/content/description.
-5. View stats and recent activity on the dashboard.
+4. **To delete multiple notes or tasks at once:**
+   - Use the checkboxes in the Notes or Tasks list to select items.
+   - Use the "Select All" checkbox to select everything on the page.
+   - Click the "Delete Selected" button to remove all selected items in one action.
+5. Use the search bar to filter notes or tasks by title/content/description.
+6. View stats and recent activity on the dashboard.
 
 ---
 
