@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import TaskList from "../components/TaskList"
 import SearchBar from "../components/SearchBar"
 import { getAllTasks } from "../connections/taskApi"
+import { deleteTasksBulk } from "../connections/taskBulkApi"
 import type { Task } from "../vite-env"
 
 export default function TasksPage() {
@@ -10,6 +11,9 @@ export default function TasksPage() {
     const [error, setError] = useState<string | null>(null)
     const [tasks, setTasks] = useState<Task[]>([])
     const [filteredTasks, setFilteredTasks] = useState<Task[]>([])
+    const [selectedIds, setSelectedIds] = useState<number[]>([])
+    const [selectAll, setSelectAll] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -40,6 +44,35 @@ export default function TasksPage() {
                 )
             )
         }
+        setSelectedIds([]);
+        setSelectAll(false);
+    }
+
+    function handleSelectId(id: number, checked: boolean) {
+        setSelectedIds((prev) =>
+            checked ? [...prev, id] : prev.filter((tid) => tid !== id)
+        );
+    }
+
+    function handleSelectAll(checked: boolean) {
+        setSelectAll(checked);
+        setSelectedIds(checked ? filteredTasks.map(t => t.id) : []);
+    }
+
+    async function handleDeleteSelected() {
+        if (selectedIds.length === 0) return;
+        setDeleting(true);
+        const ok = await deleteTasksBulk(selectedIds);
+        if (ok) {
+            const newTasks = tasks.filter(t => !selectedIds.includes(t.id));
+            setTasks(newTasks);
+            setFilteredTasks(newTasks);
+            setSelectedIds([]);
+            setSelectAll(false);
+        } else {
+            alert("Failed to delete selected tasks.");
+        }
+        setDeleting(false);
     }
 
     if (loading) return <p>Loading...</p>
@@ -63,8 +96,31 @@ export default function TasksPage() {
                         <div className="w-full">
                             <SearchBar placeholder="Search tasks..." onSearch={handleSearch} />
                         </div>
+                        <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2">
+                            <span className="text-sm text-gray-600 font-semibold">Total Tasks: {tasks.length}</span>
+                            <div className="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    checked={selectAll}
+                                    onChange={e => handleSelectAll(e.target.checked)}
+                                    aria-label="Select all tasks"
+                                />
+                                <span className="text-xs">Select All</span>
+                                <button
+                                    className="ml-2 px-3 py-1 rounded bg-red-500 text-white text-xs font-semibold disabled:opacity-50"
+                                    disabled={selectedIds.length === 0 || deleting}
+                                    onClick={handleDeleteSelected}
+                                >
+                                    {deleting ? "Deleting..." : `Delete Selected (${selectedIds.length})`}
+                                </button>
+                            </div>
+                        </div>
                         <div className="w-full">
-                            <TaskList tasks={filteredTasks} />
+                            <TaskList
+                                tasks={filteredTasks}
+                                selectedIds={selectedIds}
+                                onSelectId={handleSelectId}
+                            />
                         </div>
                     </>
                 )}
