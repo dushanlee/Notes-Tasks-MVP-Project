@@ -1,3 +1,5 @@
+import type { Note } from "../vite-env"
+
 const BASE_URL = "http://localhost:8000/api"
 
 export async function getAllNotes(): Promise<Note[] | null> {

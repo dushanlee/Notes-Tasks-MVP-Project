@@ -1,3 +1,5 @@
+import type { DashboardRecent, DashboardStats } from "../vite-env";
+
 const BASE_URL = "http://localhost:8000/api"
 
 export async function getDashboardData(): Promise<{ stats: DashboardStats; recent: DashboardRecent } | null> {
