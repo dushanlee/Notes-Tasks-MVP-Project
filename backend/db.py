@@ -143,7 +143,17 @@ def get_all_tasks() -> list[TaskOut]:
         stmt = select(DBTask)
         db_tasks = db.scalars(stmt).all()
         tasks: list[TaskOut] = []
+        now = datetime.now()
         for db_task in db_tasks:
+            # Auto-update status to 'late' if due_date is past and still pending
+            if (
+                db_task.status == "pending"
+                and db_task.due_date
+                and db_task.due_date < now
+            ):
+                db_task.status = "late"
+                db.commit()
+                db.refresh(db_task)
             tasks.append(
                 TaskOut(
                     id=db_task.id,
@@ -164,6 +174,15 @@ def get_task(task_id: int) -> TaskOut | None:
         stmt = select(DBTask).where(DBTask.id == task_id)
         db_task = db.scalar(stmt)
         if db_task:
+            now = datetime.now()
+            if (
+                db_task.status == "pending"
+                and db_task.due_date
+                and db_task.due_date < now
+            ):
+                db_task.status = "late"
+                db.commit()
+                db.refresh(db_task)
             task_model = TaskOut(
                 id=db_task.id,
                 title=db_task.title,
@@ -188,8 +207,16 @@ def update_task(task_id: int, task: TaskCreate) -> TaskOut | None:
             task_object.description = task.description
         if task.due_date is not None:
             task_object.due_date = task.due_date
-        if task_object.due_date and task_object.due_date < datetime.now():
-            task_object.status = "late"
+        # Allow status to be set to any value, but if trying to set to 'pending' and due_date is past, force 'late'
+        if hasattr(task, "status") and task.status is not None:
+            if (
+                task.status == "pending"
+                and task_object.due_date
+                and task_object.due_date < datetime.now()
+            ):
+                task_object.status = "late"
+            else:
+                task_object.status = task.status
         db.commit()
         db.refresh(task_object)
         return TaskOut(
@@ -243,6 +270,18 @@ def get_dashboard_stats() -> dict:
     with SessionLocal() as db:
         total_notes = db.query(DBNote).count()
         total_tasks = db.query(DBTask).count()
+        now = datetime.now()
+        # Auto-update all late tasks before counting
+        db_tasks = db.query(DBTask).all()
+        for task in db_tasks:
+            if (
+                task.status == "pending"
+                and task.due_date
+                and task.due_date < now
+            ):
+                task.status = "late"
+                db.commit()
+                db.refresh(task)
         completed_tasks = (
             db.query(DBTask).filter(DBTask.status == "complete").count()
         )
@@ -250,7 +289,6 @@ def get_dashboard_stats() -> dict:
             db.query(DBTask).filter(DBTask.status == "pending").count()
         )
         late_tasks = db.query(DBTask).filter(DBTask.status == "late").count()
-
         return {
             "total_notes": total_notes,
             "total_tasks": total_tasks,

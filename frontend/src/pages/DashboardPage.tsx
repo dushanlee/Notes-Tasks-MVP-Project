@@ -15,17 +15,27 @@ export default function DashboardPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setLoading(true)
-        getDashboardData().then((data) => {
-            if (!data) {
-                setError("Couldn't load dashboard data")
-                setLoading(false)
-                return
-            }
-            setStats(data.stats)
-            setRecent(data.recent)
-            setLoading(false)
-        })
+        let isMounted = true;
+        const fetchData = () => {
+            setLoading(true);
+            getDashboardData().then((data) => {
+                if (!isMounted) return;
+                if (!data) {
+                    setError("Couldn't load dashboard data");
+                    setLoading(false);
+                    return;
+                }
+                setStats(data.stats);
+                setRecent(data.recent);
+                setLoading(false);
+            });
+        };
+        fetchData();
+        const interval = setInterval(fetchData, 60000); // 60 seconds
+        return () => {
+            isMounted = false;
+            clearInterval(interval);
+        };
     }, [])
 
     if (loading) return <p>Loading...</p>;
@@ -66,7 +76,7 @@ export default function DashboardPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <StatsCard label={<><span role="img" aria-label="note">📝</span> Total Notes</>} value={stats.total_notes} />
                     <StatsCard label={<><span role="img" aria-label="check">✅</span> Completed Tasks</>} value={stats.completed_tasks} />
-                    <StatsCard label={<><span role="img" aria-label="working">💼</span> Pending Tasks</>} value={stats.total_tasks} />
+                    <StatsCard label={<><span role="img" aria-label="working">💼</span> Pending Tasks</>} value={stats.pending_tasks} />
                     <StatsCard label={<><span role="img" aria-label="late">📅</span> Late Tasks</>} value={stats.late_tasks} />
                 </div>
 
