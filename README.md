@@ -1,66 +1,119 @@
-## Notes & Tasks MVP Project
+# Notes & Tasks MVP Project
 
-The purpose of this project is to demonstrate a full-stack application
-built with FastAPI (backend) and React (frontend). It provides basic
-note-taking and task-tracking functionality, including search and a
-homepage dashboard summary. This project was created as practice for building a
-Minimum Viable Product (MVP) with database integration, RESTful API
-endpoints, and a React user interface.
+Welcome to the Notes & Tasks MVP! This is a full-stack productivity app for managing notes and tasks, built with FastAPI (Python) for the backend and React (TypeScript, Vite) for the frontend. It features a modern UI, search, dashboard stats, and persistent storage with PostgreSQL.
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [File & Folder Structure](#file--folder-structure)
+- [Tech Stack](#tech-stack)
+- [Setup Instructions](#setup-instructions)
+- [API Endpoints](#api-endpoints)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Authors and Acknowledgment](#authors-and-acknowledgment)
+
+---
 
 ## Features
 
-Notes:
+### Notes
 
 - Create, view, update, and delete notes
 - Search notes by title or content
 - Track creation and last update timestamps
 
-Tasks:
+### Tasks
 
 - Create, view, update, and delete tasks
 - Assign due dates and automatically mark overdue tasks as late
 - Track task status (pending, complete, late)
 - Search tasks by title or description
 
-Dashboard:
+### Dashboard
 
 - View total notes and tasks
 - See counts of pending, completed, and late tasks
 - Recent activity (last 5 notes and tasks)
 
+---
+
+## File & Folder Structure
+
+```
+notes-task-mvp-unit-project/
+│
+├── backend/                # FastAPI backend (Python)
+│   ├── db.py               # DB session, CRUD logic
+│   ├── db_models.py        # SQLAlchemy models for notes & tasks
+│   ├── main.py             # FastAPI app, API routes
+│   ├── schemas.py          # Pydantic schemas for validation
+│   ├── docker-compose.yml  # PostgreSQL container config
+│   ├── requirements.txt    # Python dependencies
+│   ├── pyproject.toml      # Python project config
+│   └── data/
+│       └── schema.sql      # SQL schema for DB tables
+│
+├── frontend/               # React frontend (TypeScript, Vite)
+│   ├── index.html          # Main HTML entry
+│   ├── package.json        # NPM dependencies
+│   ├── vite.config.ts      # Vite config
+│   ├── public/             # Static assets
+│   └── src/
+│       ├── App.tsx         # App root
+│       ├── main.tsx        # Entry point
+│       ├── Layout.tsx      # App layout
+│       ├── components/     # UI components (NoteCard, TaskCard, etc.)
+│       ├── pages/          # Page components (Dashboard, Notes, Tasks, etc.)
+│       ├── connections/    # API connection logic
+│       ├── context/        # (Theme context, not implemented)
+│       ├── hooks/          # (Custom hooks, not implemented)
+│       └── assets/         # Images, icons
+│
+└── README.md               # This file
+```
+
+---
+
 ## Tech Stack
 
-Backend:
+**Backend:**
 
 - FastAPI (Python)
 - SQLAlchemy ORM
 - PostgreSQL (via Docker)
-- Pydantic for schema validation
+- Pydantic (schema validation)
 
-Frontend:
+**Frontend:**
 
-- React with Vite (Typescript)
-- React Router (Typescript)
+- React (TypeScript, Vite)
+- React Router (TypeScript)
 - TailwindCSS
+
+---
 
 ## Project Architecture
 
-```scss
+```
 Frontend (React + Vite)  →  Backend (FastAPI)  →  Database (PostgreSQL via Docker)
 ```
 
+---
+
 ## Setup Instructions
 
-1. Clone the repository
+git clone <your-repo-url>
+
+### 1. Clone the repository
 
 ```bash
-# Clone the repo from GitLab (replace with your repo URL)
 git clone <your-repo-url>
-# Move into the project directory
 cd notes-task-mvp-unit-project
 ```
 
-2. Backend Setup (FastAPI + PostgreSQL)
+### 2. Backend Setup (FastAPI + PostgreSQL)
 
 Navigate to the backend folder:
 
@@ -112,7 +165,7 @@ fastapi dev main.py
 
 The backend will run at: http://localhost:8000
 
-3. Frontend Setup (React + Vite)
+### 3. Frontend Setup (React + Vite)
 
 Open a new terminal and navigate to the frontend folder:
 
@@ -137,45 +190,66 @@ npm run dev
 
 The frontend will run on http://localhost:5173
 
-4. API Endpoints
+---
 
-Notes:
+## API Endpoints
 
-POST /api/notes → Create a note
-GET /api/notes → List all notes
-GET /api/notes/{id} → Get a specific note
-PUT /api/notes/{id} → Update a note
-DELETE /api/notes/{id} → Delete a note
-GET /api/notes/query?query=searchTerm → Search notes
+### Notes
 
-Tasks:
+- `POST   /api/notes` — Create a note
+- `GET    /api/notes` — List all notes
+- `GET    /api/notes/{id}` — Get a specific note
+- `PUT    /api/notes/{id}` — Update a note
+- `DELETE /api/notes/{id}` — Delete a note
+- `GET    /api/notes/query?query=searchTerm` — Search notes
 
-POST /api/tasks → Create a task
-GET /api/tasks → List all tasks
-GET /api/tasks/{id} → Get a specific task
-PUT /api/tasks/{id} → Update a task
-DELETE /api/tasks/{id} → Delete a task
-GET /api/tasks/query?query=searchTerm → Search tasks
+### Tasks
 
-Dashboard:
+- `POST   /api/tasks` — Create a task
+- `GET    /api/tasks` — List all tasks
+- `GET    /api/tasks/{id}` — Get a specific task
+- `PUT    /api/tasks/{id}` — Update a task
+- `DELETE /api/tasks/{id}` — Delete a task
+- `GET    /api/tasks/query?query=searchTerm` — Search tasks
 
-GET /api/dashboard/stats → Summary of notes & tasks
-GET /api/dashboard/recent → Recent notes & tasks
+### Dashboard
+
+- `GET /api/dashboard/stats` — Summary of notes & tasks
+- `GET /api/dashboard/recent` — Recent notes & tasks
+
+---
 
 ## Usage
 
-1. Open the frontend in your browser (http://localhost:5173)
-2. Create notes and tasks using the provided forms
-3. Use search to quickly filter notes or tasks
-4. View stats and recent activity on the dashboard
+1. Open the frontend in your browser: [http://localhost:5173](http://localhost:5173)
+2. Use the sidebar to navigate between Dashboard, Notes, and Tasks.
+3. Create notes and tasks using the forms. Edit or delete from the detail pages.
+4. Use the search bar to filter notes or tasks by title/content/description.
+5. View stats and recent activity on the dashboard.
+
+---
 
 ## Roadmap
 
 - Add user authentication (multi-user support with JWT)
 - Add folders or tags to organize notes/tasks
 - Improve dashboard UI with charts/visuals
+- Add dark mode/theme support
+- Add mobile responsiveness
+
+---
 
 ## Authors and Acknowledgment
 
 Developed by Dushan (Michael) Lee as part of the Hack Reactor software engineering bootcamp.
 Thanks to Bart Dorsey (Hack Reactor Instructor) for guidance and feedback.
+
+---
+
+## Additional Notes
+
+- The `frontend/src/context` and `frontend/src/hooks` folders are present for future expansion (e.g., theming, custom hooks) but are not currently implemented.
+- All navigation uses `react-router` (not `react-router-dom`).
+- The app is styled with TailwindCSS for a clean, modern look.
+- PostgreSQL is managed via Docker for easy local development.
+- For any issues, please open an issue or contact the author.
