@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import type { TaskFormProps } from "../vite-env";
 
 export default function TaskForm({
   initialTitle = "",
@@ -23,18 +22,19 @@ export default function TaskForm({
     <form onSubmit={handleSubmit} className="space-y-4">
       <input
         type="text"
-        placeholder="Enter task title (required)"
+        placeholder="Task title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="w-full border p-2 rounded"
         required
       />
       <textarea
-        placeholder="Enter your task description (optional)"
+        placeholder="Task description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         className="w-full border p-2 rounded"
         rows={4}
+        required
       />
       <select
         value={status}
@@ -46,7 +46,7 @@ export default function TaskForm({
         <option value="late">Late</option>
       </select>
       <input
-        type="datetime-local"
+        type="date"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
         className="w-full border p-2 rounded"
@@ -54,13 +54,13 @@ export default function TaskForm({
       <div className="flex gap-2">
         <button
           type="submit"
-          className="p-2 rounded bg-white text-black font-semibold shadow hover:bg-gray-100 transition border-2 border-black/10"
+          className="p-2 rounded bg-white dark:bg-gray-800 text-black dark:text-white font-semibold shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 cursor-pointer"
         >
           Save Task
         </button>
         <Link
           to="/tasks"
-          className="p-2 rounded bg-white text-black font-semibold shadow hover:bg-gray-100 transition border-2 border-black/10 flex items-center justify-center"
+          className="p-2 rounded bg-white dark:bg-gray-800 text-black dark:text-white font-semibold shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 flex items-center justify-center cursor-pointer"
         >
           Cancel
         </Link>

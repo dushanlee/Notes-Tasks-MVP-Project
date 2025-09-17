@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import TaskList from "../components/TaskList";
 import SearchBar from "../components/SearchBar";
 import { getAllTasks } from "../connections/taskApi";
@@ -14,7 +14,7 @@ export default function TasksPage() {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const navigate = useNavigate();
+  // Removed navigate, using <Link> for navigation
 
   useEffect(() => {
     setLoading(true);
@@ -84,12 +84,12 @@ export default function TasksPage() {
           <h1 className="text-2xl font-bold text-black dark:text-white text-center w-full">
             Tasks
           </h1>
-          <button
-            className="absolute right-0 bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl px-6 py-3 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 whitespace-nowrap"
-            onClick={() => navigate("/tasks/new")}
+          <Link
+            to="/tasks/new"
+            className="absolute right-0 bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl px-6 py-3 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 whitespace-nowrap text-center cursor-pointer"
           >
             + New Task
-          </button>
+          </Link>
         </div>
         {tasks.length === 0 ? (
           <p className="text-center w-full mt-4 mb-8">
@@ -104,7 +104,7 @@ export default function TasksPage() {
               />
             </div>
             <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2">
-              <span className="text-sm text-gray-600 font-semibold">
+              <span className="text-sm font-semibold text-gray-600 dark:text-white">
                 Total Tasks: {tasks.length}
               </span>
               <div className="flex items-center gap-2">

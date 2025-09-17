@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import StatsCard from "../components/StatsCard";
 import RecentNotes from "../components/RecentNotes";
 import RecentTasks from "../components/RecentTasks";
@@ -12,7 +12,7 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [stats, setStats] = useState<Stats | null>(null);
   const [recent, setRecent] = useState<RecentData | null>(null);
-  const navigate = useNavigate();
+  // Removed unused navigate after converting buttons to <Link>
 
   useEffect(() => {
     let isMounted = true;
@@ -60,18 +60,18 @@ export default function DashboardPage() {
 
         {/* Action buttons row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <button
-            className="w-full bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700"
-            onClick={() => navigate("/notes/new")}
+          <Link
+            to="/notes/new"
+            className="w-full bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 text-center cursor-pointer"
           >
             + New Note
-          </button>
-          <button
-            className="w-full bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700"
-            onClick={() => navigate("/tasks/new")}
+          </Link>
+          <Link
+            to="/tasks/new"
+            className="w-full bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 text-center cursor-pointer"
           >
             + New Task
-          </button>
+          </Link>
         </div>
 
         {/* Stats row */}

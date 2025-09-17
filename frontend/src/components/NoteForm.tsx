@@ -34,13 +34,13 @@ export default function NoteForm({
       <div className="flex gap-2">
         <button
           type="submit"
-          className="p-2 rounded bg-white text-black font-semibold shadow hover:bg-gray-100 transition border-2 border-black/10"
+          className="p-2 rounded bg-white dark:bg-gray-800 text-black dark:text-white font-semibold shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 cursor-pointer"
         >
           Save Note
         </button>
         <Link
           to="/notes"
-          className="p-2 rounded bg-white text-black font-semibold shadow hover:bg-gray-100 transition border-2 border-black/10 flex items-center justify-center"
+          className="p-2 rounded bg-white dark:bg-gray-800 text-black dark:text-white font-semibold shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 flex items-center justify-center cursor-pointer"
         >
           Cancel
         </Link>
