@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import type { NoteFormProps } from "../vite-env";
-
 export default function NoteForm({
   initialTitle = "",
   initialContent = "",

@@ -145,7 +145,8 @@ def get_all_tasks() -> list[TaskOut]:
         tasks: list[TaskOut] = []
         now = datetime.now()
         for db_task in db_tasks:
-            # Auto-update status to 'late' if due_date is past and still pending
+            # Auto-update status to 'late' if due_date is past
+            # and still pending
             if (
                 db_task.status == "pending"
                 and db_task.due_date
@@ -207,7 +208,8 @@ def update_task(task_id: int, task: TaskCreate) -> TaskOut | None:
             task_object.description = task.description
         if task.due_date is not None:
             task_object.due_date = task.due_date
-        # Allow status to be set to any value, but if trying to set to 'pending' and due_date is past, force 'late'
+        # Allow status to be set to any value, but if trying to set
+        # to 'pending' and due_date is past, force 'late'
         if hasattr(task, "status") and task.status is not None:
             if (
                 task.status == "pending"

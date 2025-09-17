@@ -50,10 +50,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex w-full h-full flex-1 bg-white rounded-xl">
-      <div className="w-full space-y-6 px-4 md:px-8 border-2 border-black/10 rounded-xl shadow bg-white/70 flex flex-col">
+    <div className="flex w-full h-full flex-1 bg-white dark:bg-gray-900 rounded-xl">
+      <div className="w-full space-y-6 px-4 md:px-8 border-2 border-black/10 dark:border-gray-700 rounded-xl shadow bg-white/70 dark:bg-gray-800 flex flex-col">
         <div className="flex flex-col items-center w-full pt-8 mb-8">
-          <h1 className="text-2xl font-bold text-black text-center w-full">
+          <h1 className="text-2xl font-bold text-black dark:text-white text-center w-full">
             Dashboard
           </h1>
         </div>
@@ -61,13 +61,13 @@ export default function DashboardPage() {
         {/* Action buttons row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <button
-            className="w-full bg-white text-black rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 transition border-2 border-black/10"
+            className="w-full bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700"
             onClick={() => navigate("/notes/new")}
           >
             + New Note
           </button>
           <button
-            className="w-full bg-white text-black rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 transition border-2 border-black/10"
+            className="w-full bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl p-4 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700"
             onClick={() => navigate("/tasks/new")}
           >
             + New Task

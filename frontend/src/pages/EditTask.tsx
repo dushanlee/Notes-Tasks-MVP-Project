@@ -40,9 +40,9 @@ export default function EditTask() {
   if (!task) return <p>Loading...</p>;
 
   return (
-    <div className="flex w-full h-full flex-1">
-      <div className="w-full flex-1 space-y-6 px-4 md:px-8 border-2 border-black/10 rounded-xl shadow bg-white/70 flex flex-col pt-8">
-        <h1 className="text-2xl font-bold text-black text-center w-full mb-4">
+    <div className="flex w-full h-full flex-1 bg-white rounded-xl">
+      <div className="w-full space-y-6 px-4 md:px-8 border-2 border-black/10 dark:border-gray-700 rounded-xl shadow bg-white/70 dark:bg-gray-800 flex flex-col pt-8">
+        <h1 className="text-2xl font-bold text-black dark:text-white text-center w-full mb-4">
           Edit Task
         </h1>
         <TaskForm

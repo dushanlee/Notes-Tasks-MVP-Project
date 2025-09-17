@@ -31,38 +31,44 @@ export default function TaskDetail() {
 
   return (
     <div className="flex w-full h-full flex-1 bg-white rounded-xl">
-      <div className="w-full space-y-6 px-4 md:px-8 border-2 border-black/10 rounded-xl shadow bg-white/80 flex flex-col pt-8">
+      <div className="w-full space-y-6 px-4 md:px-8 border-2 border-black/10 dark:border-gray-700 rounded-xl shadow bg-white/70 dark:bg-gray-800 flex flex-col pt-8">
         <div className="flex items-center justify-between w-full mb-8 relative">
           <Link
             to="/tasks"
-            className="absolute left-0 px-4 py-2 bg-white text-black border-2 border-black/10 rounded-xl shadow hover:bg-gray-100 transition font-semibold flex items-center whitespace-nowrap"
+            className="absolute left-0 px-4 py-2 bg-white dark:bg-gray-900 text-black dark:text-white border-2 border-black/10 dark:border-gray-700 rounded-xl shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition font-semibold flex items-center whitespace-nowrap"
           >
             <span className="mr-2">&#8592;</span> Back to Tasks
           </Link>
           <h1 className="text-2xl font-bold text-black text-center w-full">
-            {task.title}
+            <span className="text-2xl font-bold text-black dark:text-white text-center w-full">
+              {task.title}
+            </span>
           </h1>
           <div className="flex gap-2 ml-0 mt-[-12px] mr-[-12px]">
             <Link
               to={`/tasks/${task.id}/edit`}
-              className="inline-block px-4 py-2 bg-white text-black border-2 border-black/10 rounded-xl shadow hover:bg-gray-100 transition font-semibold flex items-center whitespace-nowrap"
+              className="inline-block px-4 py-2 bg-white dark:bg-gray-900 text-black dark:text-white border-2 border-black/10 dark:border-gray-700 rounded-xl shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition font-semibold items-center whitespace-nowrap"
             >
               Edit
             </Link>
             <button
               onClick={handleDelete}
-              className="inline-block px-4 py-2 bg-white text-black border-2 border-black/10 rounded-xl shadow hover:bg-gray-100 transition font-semibold"
+              className="inline-block px-4 py-2 bg-white dark:bg-gray-900 text-black dark:text-white border-2 border-black/10 dark:border-gray-700 rounded-xl shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition font-semibold"
             >
               Delete
             </button>
           </div>
         </div>
         <p className="text-base text-black mb-3 text-left">
-          {task.description}
+          <span className="text-base text-black dark:text-white mb-3 text-left">
+            {task.description}
+          </span>
         </p>
         <div className="flex flex-col gap-1 mt-2">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">Status:</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              Status:
+            </span>
             <span
               className={`text-xs px-2 py-1 rounded ${
                 task.status === "complete"
@@ -83,14 +89,14 @@ export default function TaskDetail() {
               </span>
             )}
           </div>
-          <p className="text-xs text-gray-500 text-left">
+          <p className="text-xs text-gray-500 dark:text-gray-400 text-left">
             Created:{" "}
             {new Date(task.created_at).toLocaleString("en-US", {
               timeZone: "America/Los_Angeles",
             })}
           </p>
           {task.updated_at && (
-            <p className="text-xs text-gray-500 text-left">
+            <p className="text-xs text-gray-500 dark:text-gray-400 text-left">
               Updated:{" "}
               {new Date(task.updated_at).toLocaleString("en-US", {
                 timeZone: "America/Los_Angeles",

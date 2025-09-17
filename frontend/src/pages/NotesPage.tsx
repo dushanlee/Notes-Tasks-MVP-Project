@@ -78,13 +78,13 @@ export default function NotesPage() {
   if (error) return <p className="text-red-500">{error}</p>;
   return (
     <div className="flex w-full h-full flex-1 bg-white rounded-xl">
-      <div className="w-full space-y-6 px-4 md:px-8 border-2 border-black/10 rounded-xl shadow bg-white/70 flex flex-col pt-8">
+      <div className="w-full space-y-6 px-4 md:px-8 border-2 border-black/10 dark:border-gray-700 rounded-xl shadow bg-white/70 dark:bg-gray-800 flex flex-col pt-8">
         <div className="flex items-center justify-between w-full mb-8 relative">
-          <h1 className="text-2xl font-bold text-black text-center w-full">
+          <h1 className="text-2xl font-bold text-black dark:text-white text-center w-full">
             Notes
           </h1>
           <button
-            className="absolute right-0 bg-white text-black rounded-xl px-6 py-3 font-semibold text-lg shadow hover:bg-gray-100 transition border-2 border-black/10 whitespace-nowrap"
+            className="absolute right-0 bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl px-6 py-3 font-semibold text-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition border-2 border-black/10 dark:border-gray-700 whitespace-nowrap"
             onClick={() => navigate("/notes/new")}
           >
             + New Note

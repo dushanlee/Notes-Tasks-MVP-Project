@@ -24,4 +24,6 @@ INSERT INTO notes (title, content) VALUES
     ('Notes Test', 'Testing to see if notes works');
 
 INSERT INTO tasks (title, description, status, due_date) VALUES
-    ('Tasks Test', 'Testing to see if tasks works', 'pending', '2025-09-15 12:00:00');
+    ('Tasks Test 1', 'Testing to see if tasks works for "pending"', 'pending', '2026-09-15 12:00:00'),
+    ('Tasks Test 2', 'Testing to see if tasks works for "late"', 'late', '2025-09-15 12:00:00'),
+    ('Tasks Test 3', 'Testing to see if tasks works for "complete"', 'complete', '2025-09-15 12:00:00');
