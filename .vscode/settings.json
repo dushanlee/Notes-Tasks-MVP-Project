@@ -52,13 +52,7 @@
       "source.organizeImports": "explicit"
     }
   },
-
-  // Python-specific settings
-  "[python]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  },
-  "python.formatting.blackArgs": ["--line-length", "88"],
+  "python.formatting.blackArgs": ["--line-length", "79"],
 
   // ESLint settings
   "eslint.validate": [
