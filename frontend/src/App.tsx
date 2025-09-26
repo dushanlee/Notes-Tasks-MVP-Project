@@ -1,15 +1,15 @@
-import { Routes, Route } from 'react-router'
-import Layout from "./Layout"
-import DashboardPage from "./pages/DashboardPage"
-import NotesPage from "./pages/NotesPage"
-import TasksPage from "./pages/TasksPage"
-import NoteDetail from "./pages/NoteDetail"
-import TaskDetail from "./pages/TaskDetail"
-import CreateNote from "./pages/CreateNote"
-import CreateTask from "./pages/CreateTask"
-import EditNote from './pages/EditNote'
-import EditTask from './pages/EditTask'
-import './App.css'
+import { Routes, Route } from 'react-router';
+import Layout from './components/Layout';
+import DashboardPage from './pages/DashboardPage';
+import NotesPage from './pages/NotesPage';
+import TasksPage from './pages/TasksPage';
+import NoteDetail from './pages/NoteDetail';
+import TaskDetail from './pages/TaskDetail';
+import CreateNote from './pages/CreateNote';
+import CreateTask from './pages/CreateTask';
+import EditNote from './pages/EditNote';
+import EditTask from './pages/EditTask';
+import './App.css';
 
 function App() {
     return (
@@ -24,9 +24,8 @@ function App() {
                 <Route path="tasks/new" element={<CreateTask />} />
                 <Route path="notes/:id/edit" element={<EditNote />} />
                 <Route path="tasks/:id/edit" element={<EditTask />} />
-
             </Route>
         </Routes>
-    )
+    );
 }
-export default App
+export default App;

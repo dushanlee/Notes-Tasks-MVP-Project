@@ -1,77 +1,86 @@
-import type { Task } from "../vite-env"
-
-const BASE_URL = "http://localhost:8000/api"
+import { BASE_URL } from './baseApi';
 
 export async function getAllTasks(): Promise<Task[] | null> {
     try {
-        const response = await fetch(`${BASE_URL}/tasks`)
+        const response = await fetch(`${BASE_URL}/tasks`);
         if (!response.ok) {
-            throw new Error(`HTTP Error (tasks): ${response.status}`)
+            throw new Error(`HTTP Error (tasks): ${response.status}`);
         }
-        const data = (await response.json()) as Task[]
-        return data
+        const data = (await response.json()) as Task[];
+        return data;
     } catch (error) {
-        console.error(error)
-        return null
+        console.error(error);
+        return null;
     }
 }
 
 export async function createTask(task: {
-    title: string
-    description: string
-    status: string
-    due_date: string | null
+    title: string;
+    description: string;
+    status: string;
+    due_date: string | null;
 }) {
     try {
         const response = await fetch(`${BASE_URL}/tasks`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(task),
-        })
+        });
         if (!response.ok) {
-            throw new Error(`HTTP Error (create task): ${response.status}`)
+            throw new Error(`HTTP Error (create task): ${response.status}`);
         }
-        return (await response.json()) as Task
+        return (await response.json()) as Task;
     } catch (error) {
-        console.error(error)
-        return null
+        console.error(error);
+        return null;
     }
 }
 
 export async function getTaskById(id: number): Promise<Task | null> {
     try {
-        const response = await fetch(`${BASE_URL}/tasks/${id}`)
-        if (!response.ok) throw new Error(`HTTP Error (task by id): ${response.status}`)
-        return (await response.json()) as Task
+        const response = await fetch(`${BASE_URL}/tasks/${id}`);
+        if (!response.ok)
+            throw new Error(`HTTP Error (task by id): ${response.status}`);
+        return (await response.json()) as Task;
     } catch (error) {
-        console.error(error)
-        return null
+        console.error(error);
+        return null;
     }
 }
 
 export async function deleteTask(id: number): Promise<boolean> {
     try {
-        const response = await fetch(`${BASE_URL}/tasks/${id}`, { method: "DELETE" })
-        return response.ok
+        const response = await fetch(`${BASE_URL}/tasks/${id}`, {
+            method: 'DELETE',
+        });
+        return response.ok;
     } catch (error) {
-        console.error(error)
-        return false
+        console.error(error);
+        return false;
     }
 }
 
-export async function updateTask(id: number, task: { title: string; description: string; status: string; due_date?: string | null }) {
+export async function updateTask(
+    id: number,
+    task: {
+        title: string;
+        description: string;
+        status: string;
+        due_date?: string | null;
+    }
+) {
     try {
         const response = await fetch(`${BASE_URL}/tasks/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(task),
-        })
+        });
         if (!response.ok) {
-            throw new Error(`HTTP Error (update task): ${response.status}`)
+            throw new Error(`HTTP Error (update task): ${response.status}`);
         }
-        return (await response.json()) as Task
+        return (await response.json()) as Task;
     } catch (error) {
-        console.error(error)
-        return null
+        console.error(error);
+        return null;
     }
 }

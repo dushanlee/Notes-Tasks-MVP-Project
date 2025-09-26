@@ -1,17 +1,19 @@
 # Notes & Tasks MVP Project
 
-Welcome to the Notes & Tasks MVP! This is a full-stack productivity app for managing notes and tasks, built with FastAPI (Python) for the backend and React (TypeScript, Vite) for the frontend. It features a modern UI, search, dashboard stats, and persistent storage with PostgreSQL.
+Welcome to the Notes & Tasks MVP! This is a full-stack productivity app for managing notes and tasks, built with FastAPI (Python) for the backend and React (TypeScript, Vite) for the frontend. It features a modern UI, search, dashboard stats, and persistent storage with PostgreSQL (via Docker). The project is fully typed, uses best practices for both Python and TypeScript, and is ready for local development.
 
 ---
 
 ## Table of Contents
 
 - [Features](#features)
-- [File & Folder Structure](#file--folder-structure)
+- [Project Structure](#project-structure)
 - [Tech Stack](#tech-stack)
-- [Setup Instructions](#setup-instructions)
+- [Setup & Initialization](#setup--initialization)
 - [API Endpoints](#api-endpoints)
 - [Usage](#usage)
+- [Development Tips](#development-tips)
+- [Troubleshooting](#troubleshooting)
 - [Roadmap](#roadmap)
 - [Authors and Acknowledgment](#authors-and-acknowledgment)
 
@@ -22,14 +24,14 @@ Welcome to the Notes & Tasks MVP! This is a full-stack productivity app for mana
 ### Notes
 
 - Create, view, update, and delete notes
-- **Bulk select and delete multiple notes at once**
+- Bulk select and delete multiple notes at once
 - Search notes by title or content
 - Track creation and last update timestamps
 
 ### Tasks
 
 - Create, view, update, and delete tasks
-- **Bulk select and delete multiple notes or tasks at once**
+- Bulk select and delete multiple notes or tasks at once
 - Assign due dates and automatically mark overdue tasks as late
 - Track task status (pending, complete, late)
 - Search tasks by title or description
@@ -42,12 +44,13 @@ Welcome to the Notes & Tasks MVP! This is a full-stack productivity app for mana
 
 ---
 
-## File & Folder Structure
+## Project Structure
 
 ```
-notes-task-mvp-unit-project/
+Notes-Tasks-MVP-Project/
 │
 ├── backend/                # FastAPI backend (Python)
+│   ├── venv/               # Python virtual environment (not in version control)
 │   ├── db.py               # DB session, CRUD logic
 │   ├── db_models.py        # SQLAlchemy models for notes & tasks
 │   ├── main.py             # FastAPI app, API routes
@@ -59,6 +62,7 @@ notes-task-mvp-unit-project/
 │       └── schema.sql      # SQL schema for DB tables
 │
 ├── frontend/               # React frontend (TypeScript, Vite)
+│   ├── node_modules/       # Node.js dependencies (not in version control)
 │   ├── index.html          # Main HTML entry
 │   ├── package.json        # NPM dependencies
 │   ├── vite.config.ts      # Vite config
@@ -74,6 +78,7 @@ notes-task-mvp-unit-project/
 │       ├── hooks/          # (Custom hooks, not implemented)
 │       └── assets/         # Images, icons
 │
+├── .vscode/                # VS Code workspace settings (recommended)
 └── README.md               # This file
 ```
 
@@ -96,101 +101,114 @@ notes-task-mvp-unit-project/
 
 ---
 
-## Project Architecture
+## Setup & Initialization
 
-```
-Frontend (React + Vite)  →  Backend (FastAPI)  →  Database (PostgreSQL via Docker)
+### Prerequisites
+
+- Python 3.x
+- Node.js and npm
+- Docker (for PostgreSQL)
+- Git
+
+---
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-repo-url>
+cd Notes-Tasks-MVP-Project
 ```
 
 ---
 
-## Setup Instructions
-
-git clone <your-repo-url>
-
-### 1. Clone the repository
-
-```bash
-git clone <your-repo-url>
-cd notes-task-mvp-unit-project
-```
-
 ### 2. Backend Setup (FastAPI + PostgreSQL)
 
-Navigate to the backend folder:
-
 ```bash
-# Move into the backend folder
+# Move into the backend directory
 cd backend
-```
 
-Start PostgreSQL with Docker:
-
-```bash
-# This will start the PostgreSQL container in the background (-d = detached mode)
-docker compose up -d
-```
-
-Create the database and load the schema:
-
-```bash
-# Open an interactive psql shell inside the container
-docker exec -it postgres_db psql -U postgres
-# Inside the psql shell, run if it doesn't exist:
-CREATE DATABASE notes_and_tasks;
-# Connect to the new or existing database
-\c notes_and_tasks
-# Load the schema.sql file (this assumes your file is in ./data/schema.sql)
-\i /data/schema.sql
-# Exit the psql shell
-\q
-```
-
-Create a virtual environment and install dependencies:
-
-```bash
-# Create a virtual environment
+# Create a Python virtual environment
 python -m venv venv
+
 # Activate the virtual environment
 source venv/bin/activate   # On Mac/Linux
-venv\Scripts\activate      # On Windows (PowerShell)
-# Upgrade pip and install dependencies
-python -m pip install --upgrade pip
-python -m pip install "fastapi[standard]" psycopg sqlalchemy
-```
+# venv\Scripts\activate    # On Windows (PowerShell)
 
-Run the backend:
+# Upgrade pip and install all dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
 
-```bash
+# Start PostgreSQL with Docker
+docker compose up -d
+
+# (Optional, usually not needed) Load schema if not auto-created:
+docker exec -it postgres_db psql -U postgres -d notes_and_tasks -f /data/schema.sql
+
+# Start the FastAPI backend server
 fastapi dev main.py
 ```
 
-The backend will run at: http://localhost:8000
+The backend will run at: [http://localhost:8000](http://localhost:8000)
+
+---
 
 ### 3. Frontend Setup (React + Vite)
 
-Open a new terminal and navigate to the frontend folder:
-
 ```bash
-# Open a new terminal window
+# Open a new terminal window/tab
 cd frontend
-```
 
-Install dependencies:
-
-```bash
-# Install all npm packages defined in package.json
+# Install Node.js dependencies
 npm install
-```
 
-Run the frontend:
-
-```bash
 # Start the React development server
 npm run dev
 ```
 
-The frontend will run on http://localhost:5173
+The frontend will run at: [http://localhost:5173](http://localhost:5173)
+
+---
+
+### 4. VS Code Setup (Recommended)
+
+- Open the project folder in VS Code
+- Press `Ctrl+Shift+P` and run `Python: Select Interpreter`
+- Choose: `./backend/venv/bin/python`
+- Recommended extensions:
+  - Python (ms-python.python)
+  - Pylance (ms-python.vscode-pylance)
+  - Black Formatter (ms-python.black-formatter)
+  - Prettier (esbenp.prettier-vscode)
+  - ESLint (dbaeumer.vscode-eslint)
+- Auto-formatting and linting are pre-configured in `.vscode/settings.json`
+
+---
+
+### 5. Daily Development Workflow
+
+```bash
+# Terminal 1 - Backend
+cd backend
+source venv/bin/activate
+fastapi dev main.py
+
+# Terminal 2 - Frontend
+cd frontend
+npm run dev
+
+# Terminal 3 - Database (if needed)
+docker compose up -d
+```
+
+---
+
+### 6. Stopping Services
+
+```bash
+# Stop servers: Ctrl+C in each terminal
+# Deactivate Python venv: deactivate
+# Stop database: docker compose down
+```
 
 ---
 
@@ -234,6 +252,36 @@ The frontend will run on http://localhost:5173
 6. View stats and recent activity on the dashboard.
 
 ---
+
+## Development Tips
+
+- **Virtual Environment:** Always activate the backend virtual environment before running backend commands.
+- **Database:** Make sure Docker is running and the PostgreSQL container is up before starting the backend.
+- **Auto-formatting:** Prettier (frontend) and Black (backend) are pre-configured for 4 spaces. Use `Shift+Alt+F` to format files.
+- **Type Safety:** All types are defined globally in `frontend/src/vite-env.d.ts` for frontend, and with Pydantic for backend.
+- **Bulk Delete:** Both notes and tasks support bulk deletion via checkboxes.
+- **API Docs:** FastAPI auto-generates docs at [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Testing:** (Add tests as needed; currently, manual testing is recommended.)
+
+## Troubleshooting
+
+- **Database Connection Issues:**
+  - Ensure Docker is running
+  - Restart containers: `docker compose down && docker compose up -d`
+  - Check port 5432 is available
+- **Python Import Errors:**
+  - Activate the virtual environment
+  - Reinstall packages: `pip install -r requirements.txt`
+  - Set the correct Python interpreter in VS Code
+- **Frontend Build Errors:**
+  - Clear node_modules: `rm -rf node_modules && npm install`
+  - Check Node.js version compatibility
+- **Port Conflicts:**
+  - Backend (8000), Frontend (5173), Database (5432) must be available
+  - Kill processes using these ports if needed
+- **Auto-formatting not working:**
+  - Ensure Prettier and Black extensions are installed and enabled in VS Code
+  - Check `.vscode/settings.json` for correct configuration
 
 ## Roadmap
 
